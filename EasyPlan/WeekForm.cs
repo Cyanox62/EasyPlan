@@ -27,7 +27,7 @@ namespace EasyPlan
 		private void SetAssignmentBox(int index)
 		{
 			WeekAssignments.Items.Clear();
-			if (workDates.ContainsKey(index))
+			if (workDates.ContainsKey(index) && workDates[index].Count > 0)
 			{
 				foreach (Assignment assignment in workDates[index])
 				{
@@ -54,6 +54,26 @@ namespace EasyPlan
 				}
 			}
 			return bestDay;
+		}
+
+		private bool isAllWorkDone(int index)
+		{
+			if (workDates.ContainsKey(index))
+			{
+				foreach (Assignment assignment in workDates[index])
+				{
+					if (!assignment.complete) return false;
+				}
+				return true;
+			}
+			return false;
+		}
+
+		private float GetHoursOfWork()
+		{
+			float hours = 0;
+			foreach (Assignment assignment in week.assignments) hours += assignment.timeToComplete;
+			return hours;
 		}
 
 		public WeekForm(Week w)
@@ -150,12 +170,9 @@ namespace EasyPlan
 
 			this.week = week;
 
-			//todo: Add an 'estimated hours of work left this week' box
-
-			Text = week.title;
+			Text = $"EasyPlan | {week.title} - Estimated {GetHoursOfWork()} hours of work remaining";
 
 			int totalDays = (week.endDate - DateTime.Today).Days + 1;
-			Console.WriteLine("TOTALDAYS: " + totalDays);
 
 			foreach (Assignment a in week.assignments)
 			{
@@ -184,25 +201,24 @@ namespace EasyPlan
 				}
 			}
 
-			DateTime[] boldedDates = new DateTime[final.Keys.Count];
 			for (int i = 0; i < final.Keys.Count; i++)
 			{
 				DateTime date = DateTime.Today.AddDays(final.ElementAt(i).Key);
-				boldedDates[i] = date;
 				int index = (date - DateTime.Today).Days;
 				if (!workDates.ContainsKey(index)) workDates.Add(index, new List<Assignment>());
 				foreach (Assignment assignment in final[i])
 				{
 					workDates[index].Add(assignment);
 				}
+				if (!isAllWorkDone(index)) WeekCalendar.AddBoldedDate(date);
 			}
-			WeekCalendar.BoldedDates = boldedDates;
+			WeekCalendar.UpdateBoldedDates();
 			SetAssignmentBox(0);
 		}
 
 		private void WeekCalendar_DateChanged(object sender, DateRangeEventArgs e)
 		{
-			SetAssignmentBox((e.End - DateTime.Today).Days);
+			SetAssignmentBox((e.Start - DateTime.Today).Days);
 		}
 
 		private void WeekAssignments_MouseDown(object sender, MouseEventArgs e)
@@ -223,6 +239,16 @@ namespace EasyPlan
 			int index = (WeekCalendar.SelectionEnd - DateTime.Today).Days;
 			Assignment assignment = workDates[index][WeekAssignments.SelectedIndex];
 			assignment.complete = !assignment.complete;
+			if (isAllWorkDone(index))
+			{
+				WeekCalendar.RemoveBoldedDate(WeekCalendar.SelectionEnd);
+				WeekCalendar.UpdateBoldedDates();
+			}
+			else
+			{
+				WeekCalendar.AddBoldedDate(WeekCalendar.SelectionEnd);
+				WeekCalendar.UpdateBoldedDates();
+			}
 			SetAssignmentBox(index);
 		}
 
@@ -233,14 +259,15 @@ namespace EasyPlan
 			if (result == DialogResult.Yes)
 			{
 				workDates[index].RemoveAt(WeekAssignments.SelectedIndex);
+				Console.WriteLine(workDates[index].Count);
 				SetAssignmentBox(index);
 			}
+			if (isAllWorkDone(index)) WeekCalendar.RemoveBoldedDate(WeekCalendar.SelectionEnd);
+			WeekCalendar.UpdateBoldedDates();
 		}
 
 		private void WeekSaveButton_Click(object sender, EventArgs e)
 		{
-			//todo: add week loading
-
 			using (SaveFileDialog saveFileDialog = new SaveFileDialog())
 			{
 				saveFileDialog.InitialDirectory = "c:\\";

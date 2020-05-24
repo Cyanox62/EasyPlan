@@ -29,8 +29,14 @@ namespace EasyPlan
 			{
 				if (form.ShowDialog() == DialogResult.OK)
 				{
-					// todo: error handling when two assignments of the same name are added
-					assignments.Add(AssignmentListBox.Items.Add(form.assignment.title), form.assignment);
+					if (!AssignmentListBox.Items.Contains(form.assignment.title))
+					{
+						assignments.Add(AssignmentListBox.Items.Add(form.assignment.title), form.assignment);
+					}
+					else
+					{
+						MessageBox.Show("Assignment with that name already exists!", "Error Addding Assignment", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
 				}
 			}
 		}

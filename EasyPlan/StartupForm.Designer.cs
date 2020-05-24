@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartupForm));
 			this.CreateWeekButton = new System.Windows.Forms.Button();
 			this.LoadWeekButton = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@
 			this.LoadWeekButton.TabIndex = 1;
 			this.LoadWeekButton.Text = "Load Week";
 			this.LoadWeekButton.UseVisualStyleBackColor = true;
+			this.LoadWeekButton.Click += new System.EventHandler(this.LoadWeekButton_Click);
 			// 
 			// label1
 			// 
@@ -62,7 +64,7 @@
 			this.label1.TabIndex = 2;
 			this.label1.Text = "EasyPlan";
 			// 
-			// OptionsForm
+			// StartupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,9 +72,12 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.LoadWeekButton);
 			this.Controls.Add(this.CreateWeekButton);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "OptionsForm";
+			this.Name = "StartupForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "EasyPlan";
 			this.ResumeLayout(false);
 			this.PerformLayout();

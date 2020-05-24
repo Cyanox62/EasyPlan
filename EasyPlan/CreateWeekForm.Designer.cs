@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateWeekForm));
 			this.WeekTitleTextBox = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.WeekHighlightCalendar = new System.Windows.Forms.MonthCalendar();
@@ -83,7 +84,6 @@
 			this.AssignmentListBox.Location = new System.Drawing.Point(249, 58);
 			this.AssignmentListBox.Name = "AssignmentListBox";
 			this.AssignmentListBox.Size = new System.Drawing.Size(224, 186);
-			this.AssignmentListBox.Sorted = true;
 			this.AssignmentListBox.TabIndex = 4;
 			this.AssignmentListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AssignmentListBox_MouseDown);
 			// 
@@ -117,6 +117,7 @@
 			// 
 			// editToolStripMenuItem
 			// 
+			this.editToolStripMenuItem.Image = global::EasyPlan.Properties.Resources.icons8_edit_24;
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.editToolStripMenuItem.Text = "Edit";
@@ -124,6 +125,7 @@
 			// 
 			// deleteToolStripMenuItem
 			// 
+			this.deleteToolStripMenuItem.Image = global::EasyPlan.Properties.Resources.trash;
 			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
 			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.deleteToolStripMenuItem.Text = "Delete";
@@ -141,9 +143,11 @@
 			this.Controls.Add(this.WeekHighlightCalendar);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.WeekTitleTextBox);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "CreateWeekForm";
-			this.Text = "EasyPlan - Create New Week";
+			this.Text = "EasyPlan | Create New Week";
 			this.AssignmentContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();

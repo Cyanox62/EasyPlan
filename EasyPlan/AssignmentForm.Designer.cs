@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AssignmentForm));
 			this.AssignmentTitleTextBox = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.EarlyDueDateCalendar = new System.Windows.Forms.MonthCalendar();
@@ -135,9 +136,11 @@
 			this.Controls.Add(this.EarlyDueDateCalendar);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.AssignmentTitleTextBox);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "AssignmentForm";
-			this.Text = "Add New Assignment";
+			this.Text = "EasyPlan | Add New Assignment";
 			((System.ComponentModel.ISupportInitialize)(this.TimeToCompleteNumeric)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
