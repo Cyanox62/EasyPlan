@@ -11,7 +11,7 @@ namespace EasyPlan
 		{
 			InitializeComponent();
 
-			new WeekForm(null).Show();
+			//new WeekForm(null).Show();
 		}
 
 		private void CreateWeekButton_Click(object sender, EventArgs e)

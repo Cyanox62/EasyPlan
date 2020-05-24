@@ -10,6 +10,7 @@ namespace EasyPlan
 	public partial class WeekForm : Form
 	{
 		private Week week;
+		private int totalDays;
 
 		private Dictionary<int, List<Assignment>> workDates = new Dictionary<int, List<Assignment>>();
 		private Dictionary<int, List<Assignment>> map = new Dictionary<int, List<Assignment>>();
@@ -42,17 +43,20 @@ namespace EasyPlan
 
 		private int GetBestDay(int a)
 		{
+			Console.WriteLine("reset: " + a);
 			int bestDay = -1;
 			int count = int.MaxValue;
-			for (int i = 0; i < a; i++)
+			for (int i = 0; i < (a == 1 ? totalDays : a); i++)
 			{
 				int curCount = final.ContainsKey(i) ? final[i].Count : 0;
+				Console.WriteLine(curCount);
 				if (curCount < count)
 				{
 					count = curCount;
 					bestDay = i;
 				}
 			}
+			Console.WriteLine(bestDay);
 			return bestDay;
 		}
 
@@ -76,11 +80,11 @@ namespace EasyPlan
 			return hours;
 		}
 
-		public WeekForm(Week w)
+		public WeekForm(Week week)
 		{
 			InitializeComponent();
 
-			Assignment[] assign =
+			/*Assignment[] assign =
 			{
 				new Assignment()
 				{
@@ -166,13 +170,13 @@ namespace EasyPlan
 				title = "Test Week",
 				endDate = DateTime.Now.AddDays(7),
 				assignments = new List<Assignment>(assign)
-			};
+			};*/
 
 			this.week = week;
 
 			Text = $"EasyPlan | {week.title} - Estimated {GetHoursOfWork()} hours of work remaining";
 
-			int totalDays = (week.endDate - DateTime.Today).Days + 1;
+			totalDays = (week.endDate - DateTime.Today).Days + 1;
 
 			foreach (Assignment a in week.assignments)
 			{
