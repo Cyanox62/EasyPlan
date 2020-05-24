@@ -43,20 +43,17 @@ namespace EasyPlan
 
 		private int GetBestDay(int a)
 		{
-			Console.WriteLine("reset: " + a);
 			int bestDay = -1;
 			int count = int.MaxValue;
 			for (int i = 0; i < (a == 1 ? totalDays : a); i++)
 			{
 				int curCount = final.ContainsKey(i) ? final[i].Count : 0;
-				Console.WriteLine(curCount);
 				if (curCount < count)
 				{
 					count = curCount;
 					bestDay = i;
 				}
 			}
-			Console.WriteLine(bestDay);
 			return bestDay;
 		}
 
@@ -263,7 +260,6 @@ namespace EasyPlan
 			if (result == DialogResult.Yes)
 			{
 				workDates[index].RemoveAt(WeekAssignments.SelectedIndex);
-				Console.WriteLine(workDates[index].Count);
 				SetAssignmentBox(index);
 			}
 			if (isAllWorkDone(index)) WeekCalendar.RemoveBoldedDate(WeekCalendar.SelectionEnd);
